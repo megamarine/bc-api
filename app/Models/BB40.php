@@ -48,6 +48,7 @@ class BB40 extends Model
         JOIN sub e on e.sub = c.sub
         JOIN inv f on f.inv = d.inv
         JOIN omd g on g.oms = a.oms
-        WHERE a.jnsp = 'BC 4.0' and b.nodoc = 'SPB-2310-000069' ORDER BY date DESC");
+        WHERE a.jnsp = 'BC 4.0' ORDER BY date DESC");
     }
+    // and b.nodoc = 'SPB-2310-000069'
 }
