@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BB40;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class BB40Controller extends Controller
 {
@@ -25,9 +26,15 @@ class BB40Controller extends Controller
                 $tujuan_kirim = '1';
             }
 
+            if ($row->address == null) {
+                $alamat =  $row->city;
+            }else {
+                $alamat = $row->address;
+            }
+
             return response()->json([
-                'status' => true,
-                'message' => 'Data BC 4.0 ditemukan',
+                // 'status' => true,
+                // 'message' => 'Data BC 4.0 ditemukan',
                 'asalData' => 'S',
                 'asuransi' => number_format(0, 2),
                 'bruto' => $row->qty,
@@ -55,9 +62,40 @@ class BB40Controller extends Controller
                 'vd' => 0.00,
                 'uangMuka' => 0.00,
                 'nilaiJasa' => 0.00,
-                'entitas' => array(
-                    'property' => $row->docp
-                )
+                'entitas' => 
+                [
+                    array(
+                        'alamatEntitas' => 'JL. DUSUN WONOKOYO RT.03 RW.01 003/001 WONOKOYO, BEJI, PASURUAN, JAWA TIMUR',
+                        'kodeEntitas' => '3',
+                        'kodeJenisIdentitas' => '5',
+                        'namaEntitas' => 'BARAMUDA BAHARI',
+                        'nibEntitas' => '8120002941581',
+                        'nomorIdentitas' => '017185901651000',
+                        'nomorIjinEntitas' => '3458/KM.4/2017',
+                        'seriEntitas' => 1,
+                        'tanggalIjinEntitas' => '2017-12-14'
+                    ), array(
+                        'alamatEntitas' => $alamat,
+                        'kodeEntitas' => '7',
+                        'kodeJenisApi' => '2',
+                        'kodeJenisIdentitas' => '5',
+                        'kodeStatus' => '5',
+                        'namaEntitas' => $row->nama_supp,
+                        'nibEntitas' => '-',
+                        'nomorIdentitas' => '-',
+                        'seriEntitas' => 2
+                    ), array(
+                        'alamatEntitas' => 'JL. DUSUN WONOKOYO RT.03 RW.01 003/001 WONOKOYO, BEJI, PASURUAN, JAWA TIMUR',
+                        'kodeEntitas' => '9',
+                        'kodeJenisApi' => '2',
+                        'kodeJenisIdentitas' => '5',
+                        'kodeStatus' => '5',
+                        'namaEntitas' => 'BARAMUDA BAHARI',
+                        'nibEntitas' => '017185901651000',
+                        'nomorIdentitas' => '017185901651000',
+                        'seriEntitas' => 3
+                    )
+                ]
             ],200);
         }
     }
