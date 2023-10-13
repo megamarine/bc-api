@@ -34,7 +34,7 @@ class BB40Controller extends Controller
 
             return response()->json([
                 // 'status' => true,
-                // 'message' => 'Data BC 4.0 ditemukan',
+                'NoTransaksi' => $row->docp,
                 'asalData' => 'S',
                 'asuransi' => number_format(0, 2),
                 'bruto' => $row->qty,
@@ -95,7 +95,24 @@ class BB40Controller extends Controller
                         'nomorIdentitas' => '017185901651000',
                         'seriEntitas' => 3
                     )
-                ]
+                    ],
+                    'dokumen' => 
+                    [
+                        array(
+                        'kodeDokumen' => '999',
+                        'nomorDokumen' => $row->penerimaan_barang,
+                        'seriDokumen' => 1,
+                        'tanggalDokumen' => date('Y-m-d', strtotime($row->date_do))
+                        )
+                    ],
+                    'pengangkut' => [
+                        array(
+                        'namaPengangkut' => 'MOBIL TRUK',
+                        'nomorPengangkut' => $row->nopol,
+                        'seriPengangkut' => 1
+                        )
+                    ],
+                    'kontainer' => [],
             ],200);
         }
     }

@@ -23,6 +23,8 @@ class BB40 extends Model
             c.remark as ket_kebutuhan, 
             c.nosj as sj_supp, 
             c.nodoc as doc_bc,
+            c.date as date_do,
+            c.nopol,
             d.inv as kode_item, 
             d.loc, 
             d.spesifikasi, 
