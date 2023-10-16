@@ -23,6 +23,8 @@ class BB40 extends Model
             c.remark as ket_kebutuhan, 
             c.nosj as sj_supp, 
             c.nodoc as doc_bc,
+            c.date as date_do,
+            c.nopol,
             d.inv as kode_item, 
             d.loc, 
             d.spesifikasi, 
@@ -39,6 +41,7 @@ class BB40 extends Model
             e.address,
             e.city,
             f.name as item_name,
+            f.spesifikasi as spek_item,
             g.price as harga_po
         FROM
             docp a 
