@@ -41,6 +41,7 @@ class BB40 extends Model
             e.address,
             e.city,
             f.name as item_name,
+            f.spesifikasi as spek_item,
             g.price as harga_po
         FROM
             docp a 

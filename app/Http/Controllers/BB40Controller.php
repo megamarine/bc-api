@@ -20,6 +20,7 @@ class BB40Controller extends Controller
         foreach ($data2 as $row) {
             $harga_penyerahan = $row->harga_po * $row->qty_flow;
             $kode_item = substr($row->kode_item,0,1); 
+
             if ($kode_item == 9) {
                 $tujuan_kirim = '2';
             }else {
@@ -30,6 +31,14 @@ class BB40Controller extends Controller
                 $alamat =  $row->city;
             }else {
                 $alamat = $row->address;
+            }
+
+            $pajak = 0.11 * $row->harga_po * $row->qty_flow;
+            $po = substr($row->no_po,0,3);
+            if ($po == 'POJ') {
+                $hitung_po = $row->harga_po * $row->qty_flow;
+            }else {
+                $hitung_po = 0;
             }
 
             return response()->json([
@@ -113,6 +122,71 @@ class BB40Controller extends Controller
                         )
                     ],
                     'kontainer' => [],
+                    'kemasan' => [ 
+                        array(
+                        'jumlahKemasan' => '-',
+                        'kodeJenisKemasan' => 'NE',
+                        'merkKemasan' => '-',
+                        'seriKemasan' => 1
+                        )
+                     ],
+                     'pungutan' => [
+                        array(
+                        'kodeFasilitasTarif' => '3',
+                        'kodeJenisPungutan' => 'PPN',
+                        'nilaiPungutan' => $pajak
+                        )
+                     ],
+                     'barang' => [
+                        array(
+                           'asuransi' => 0.00,
+                           'bruto' => $row->qty,
+                           'cif' => 0.00,
+                           'diskon' => 0.00,
+                           'hargaEkspor' => 0.00,
+                           'hargaPenyerahan' => $harga_penyerahan,
+                           'hargaSatuan' => $row->harga_po,
+                           'isiPerKemasan' => 0,
+                           'jumlahKemasan' => 0.00,
+                           'jumlahRealisasi' => 0.00,
+                           'jumlahSatuan' => $row->qty_flow,
+                           'kodeBarang' => $row->kode_item,
+                           'kodeDokumen' => '40',
+                           'kodeJenisKemasan' => 'NE',
+                           'kodeSatuanBarang' => $row->unit,
+                           'merk' => '-',
+                           'netto' => $row->qty,
+                           'nilaiBarang' => 0.00,
+                           'posTarif' => '48191000',
+                           'seriBarang' => 1,
+                           'spesifikasiLain' => $row->spek_item,
+                           'tipe' => 'TIPE BARANG',
+                           'ukuran' => '',
+                           'uraian' => 'Box',
+                           'volume' => 0.00,
+                           'cifRupiah' => $harga_penyerahan,
+                           'hargaPerolehan' => 0.00,
+                           'kodeAsalBahanBaku' => '1',
+                           'ndpbm' => 0.00,
+                           'uangMuka' => 0.00,
+                           'nilaiJasa' => $hitung_po,
+                           'barangTarif' => [
+                              array(
+                                 'kodeJenisTarif' => '1',
+                                 'jumlahSatuan' => $row->qty_flow,
+                                 'kodeFasilitasTarif' => '3',
+                                 'kodeSatuanBarang' => $row->unit,
+                                 'nilaiBayar' => $harga_penyerahan,
+                                 'nilaiFasilitas' => 0.00,
+                                 'nilaiSudahDilunasi' => 0.00,
+                                 'seriBarang' => 1,
+                                 'tarif' => 0.00,
+                                 'tarifFasilitas' => 0.00,
+                                 'kodeJenisPungutan' => 'PPN'
+                                )
+                           ]
+                        )
+                     ]
             ],200);
         }
     }
