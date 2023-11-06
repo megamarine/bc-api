@@ -78,8 +78,8 @@ class BB40 extends Model
             JOIN sub d ON d.sub = c.sub
         WHERE
             a.jnsp = 'BC 4.0'
-            and b.nodoc = 'SPB-2310-000138'
-        ORDER BY a.`date` DESC");
+        ORDER BY a.`date` DESC limit 1");
+        // and b.nodoc = 'SPB-2310-000138'
         
     }
 
