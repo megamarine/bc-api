@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BB40Controller;
+use App\Http\Controllers\MMP40Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::get('BB40',[BB40Controller::class],'index');
 Route::get('/BB40', [BB40Controller::class, 'index']);
+Route::get('/MMP40', [MMP40Controller::class, 'index']);
