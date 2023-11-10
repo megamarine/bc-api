@@ -175,8 +175,7 @@ class BB40Controller extends Controller
             ];
 
             $arr_header = array(
-                'NoTransaksi' => $header->docp,
-                'asaldata' => 'S',
+                'asalData' => 'S',
                 'asuransi' => number_format(0,2),
                 'bruto' => $total_qty,
                 'cif' => 0.00,
