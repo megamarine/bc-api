@@ -41,16 +41,68 @@ class MMP40Controller extends Controller
                     'jumlahKemasan' => $kemasan->JUMLAH_KEMASAN,
                     'kodeJenisKemasan' => $kemasan->KODE_JENIS_KEMASAN,
                     'merkKemasan' => $merk,
-                    'seriKemasan' => $kemasan->no_urut
+                    'seriKemasan' => $kemasan->no_urut,
+                    
                 );
+
+                $kode_kemas = $kemasan->KODE_JENIS_KEMASAN;
             }
 
             $data_barang = $model->get_data_barang($ucode);
             $arr_barang = array();
             foreach ($data_barang as $barang) {
+                if ($barang->JUMLAH_KEMASAN == null) {
+                    $jml_kemasan = 0;
+                }else {
+                    $jml_kemasan = $barang->JUMLAH_KEMASAN;
+                }
                 $arr_barang[] = array(
                     'asuransi' => $barang->ASURANSI,
                     'bruto' => '-',
+                    'cif' => $barang->CIF,
+                    'diskon' => $barang->DISKON,
+                    'hargaEkspor' => '-',
+                    'hargaPenyerahan' => floatval($barang->HARGA_PENYERAHAN),
+                    'hargaSatuan' => floatval($barang->HARGA_SATUAN),
+                    'isiPerKemasan' => '-',
+                    'jumlahKemasan' => $jml_kemasan,
+                    'jumlahRealisasi' => '-',
+                    'jumlahSatuan' => $barang->JUMLAH_SATUAN,
+                    'kodeBarang' => $barang->KODE_BARANG,
+                    'kodeDokumen' => '40',
+                    'kodeJenisKemasan' => $kode_kemas,
+                    'kodeSatuanBarang' => $barang->KODE_SATUAN,
+                    'merk' => '',
+                    'netto' => $barang->NETTO,
+                    'nilaiBarang' => floatval($barang->NILAI_PABEAN),
+                    'posTarif' => floatval($barang->POS_TARIF),
+                    'seriBarang' => $barang->no_urut,
+                    'spesifikasiLain' => $barang->SPESIFIKASI_LAIN,
+                    'tipe' => 'TIPE BARANG',
+                    'ukuran' => '',
+                    'uraian' => $barang->URAIAN,
+                    'volume' => $barang->VOLUME,
+                    'cifRupiah' => $barang->CIF_RUPIAH,
+                    'hargaPerolehan' => '-',
+                    'kodeAsalBahanBaku' => '1',
+                    'ndpbm' => floatval(0),
+                    'uangMuka' => floatval(0),
+                    'nilaiJasa' => floatval(0),
+                    'barangTarif' => [
+                        array(
+                            'kodeJenisTarif' => '1',
+                            'jumlahSatuan' => $barang->JUMLAH_SATUAN,
+                            'kodeFasilitasTarif' => '3',
+                            'kodeSatuanBarang' => $barang->KODE_SATUAN,
+                            'nilaiBayar' => '-',
+                            'nilaiFasilitas' => '-',
+                            'nilaiSudahDilunasi' => floatval(0.00),
+                            'seriBarang' => $barang->no_urut,
+                            'tarif' => floatval($barang->HARGA_SATUAN),
+                            'tarifFasilitas' => 'waiting list ppn',
+                            'kodeJenisPungutan' => "PPN"
+                        ),
+                    ]
                 );
             }
 

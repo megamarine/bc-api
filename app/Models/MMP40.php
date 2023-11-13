@@ -79,7 +79,7 @@ class MMP40 extends Model
     }
 
     function get_data_barang($Ucode) {
-        return DB::connection('sqlsrv')->select("SELECT 
+        return DB::connection('sqlsrv')->select("select 
             atb.no_urut,
             atb.ASURANSI,
             atb.CIF,
@@ -101,7 +101,10 @@ class MMP40 extends Model
             atb.ID_HEADER,
             atb.no_bukti_terima,
             atb.tgl_bukti_terima,
-            atb.Ket
+            atb.Ket,
+            atb.JUMLAH_KEMASAN,
+            atb.NILAI_PABEAN,
+            SPESIFIKASI_LAIN
             from ACTS_tpb_barang atb WHERE UCode_tpb_header = '$Ucode'");
     }
 }
