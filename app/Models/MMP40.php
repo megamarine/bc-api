@@ -18,6 +18,7 @@ class MMP40 extends Model
             ath.ASURANSI,
             SUBSTRING(ath.No_BC,3,2) AS kode_bc, 
             ath.TANGGAL_AJU,
+            ath.NOMOR_AJU,
             ath.KODE_KANTOR,
             ath.KODE_JENIS_TPB,
             ath.CIF,
@@ -50,7 +51,7 @@ class MMP40 extends Model
             ACTS_tpb_header ath
         join ACTS_tpb_kemasan atk on atk.UCode_tpb_header = ath.Ucode_tpb_header
         join tb_m_Kemasan tmk on tmk.UCode_Kemasan = atk.ucode_kemasan
-        WHERE SUBSTRING(ath.No_BC,3,2) = 40 and ath.No_BC = 'BC40/23/10/0107'");
+        WHERE SUBSTRING(ath.No_BC,3,2) = 40 and ath.NOMOR_AJU = '07134000165220231101005198'");
     }
 
     function get_data_dokumen($Ucode) {

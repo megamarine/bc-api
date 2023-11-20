@@ -56,33 +56,38 @@ class MMP40Controller extends Controller
                 }else {
                     $jml_kemasan = $barang->JUMLAH_KEMASAN;
                 }
+                if ($barang->SPESIFIKASI_LAIN == null) {
+                    $spek_lain = '-';
+                }else {
+                    $spek_lain = $barang->SPESIFIKASI_LAIN;
+                }
                 $arr_barang[] = array(
-                    'asuransi' => $barang->ASURANSI,
-                    'bruto' => '-',
-                    'cif' => $barang->CIF,
-                    'diskon' => $barang->DISKON,
+                    'asuransi' => floatval($barang->ASURANSI),
+                    'bruto' => 0,
+                    'cif' => floatval($barang->CIF),
+                    'diskon' => floatval($barang->DISKON),
                     'hargaEkspor' => '-',
                     'hargaPenyerahan' => floatval($barang->HARGA_PENYERAHAN),
                     'hargaSatuan' => floatval($barang->HARGA_SATUAN),
                     'isiPerKemasan' => '-',
                     'jumlahKemasan' => $jml_kemasan,
                     'jumlahRealisasi' => '-',
-                    'jumlahSatuan' => $barang->JUMLAH_SATUAN,
+                    'jumlahSatuan' => floatval($barang->JUMLAH_SATUAN),
                     'kodeBarang' => $barang->KODE_BARANG,
                     'kodeDokumen' => '40',
                     'kodeJenisKemasan' => $kode_kemas,
                     'kodeSatuanBarang' => $barang->KODE_SATUAN,
                     'merk' => '',
-                    'netto' => $barang->NETTO,
+                    'netto' => floatval($barang->NETTO),
                     'nilaiBarang' => floatval($barang->NILAI_PABEAN),
                     'posTarif' => floatval($barang->POS_TARIF),
                     'seriBarang' => $barang->no_urut,
-                    'spesifikasiLain' => $barang->SPESIFIKASI_LAIN,
+                    'spesifikasiLain' => $spek_lain,
                     'tipe' => 'TIPE BARANG',
-                    'ukuran' => '',
+                    'ukuran' => '-',
                     'uraian' => $barang->URAIAN,
-                    'volume' => $barang->VOLUME,
-                    'cifRupiah' => $barang->CIF_RUPIAH,
+                    'volume' => floatval($barang->VOLUME),
+                    'cifRupiah' => floatval($barang->CIF_RUPIAH),
                     'hargaPerolehan' => '-',
                     'kodeAsalBahanBaku' => '1',
                     'ndpbm' => floatval(0),
@@ -91,15 +96,15 @@ class MMP40Controller extends Controller
                     'barangTarif' => [
                         array(
                             'kodeJenisTarif' => '1',
-                            'jumlahSatuan' => $barang->JUMLAH_SATUAN,
+                            'jumlahSatuan' => floatval($barang->JUMLAH_SATUAN),
                             'kodeFasilitasTarif' => '3',
                             'kodeSatuanBarang' => $barang->KODE_SATUAN,
-                            'nilaiBayar' => '-',
-                            'nilaiFasilitas' => '-',
+                            'nilaiBayar' => floatval(0),
+                            'nilaiFasilitas' => floatval(0),
                             'nilaiSudahDilunasi' => floatval(0.00),
                             'seriBarang' => $barang->no_urut,
                             'tarif' => floatval($barang->HARGA_SATUAN),
-                            'tarifFasilitas' => 'waiting list ppn',
+                            'tarifFasilitas' => floatval(0),
                             'kodeJenisPungutan' => "PPN"
                         ),
                     ]
@@ -134,10 +139,10 @@ class MMP40Controller extends Controller
                     'kodeEntitas' => '3',
                     'kodeJenisIdentitas' => '5',
                     'namaEntitas' => $header->NAMA_PENGUSAHA,
-                    'nibEntitas' => $header->npwp_pengusaha,
+                    'nibEntitas' => '8120106862498',
                     'nomorIjinEntitas' => $header->NOMOR_IJIN_TPB,
                     'seriEntitas' => 1,
-                    'tanggalIjinEntitas' => 'tanya mas arik'
+                    'tanggalIjinEntitas' => '2020-09-10'
                 ), array(
                     'alamatEntitas' => $header->ALAMAT_PENGIRIM,
                     'kodeEntitas' => '7',
@@ -155,7 +160,7 @@ class MMP40Controller extends Controller
                     'kodeJenisIdentitas' => '5',
                     'kodeStatus' => '5',
                     'namaEntitas' => $header->NAMA_PENGUSAHA,
-                    'nibEntitas' => $header->npwp_pengusaha,
+                    'nibEntitas' => '8120106862498',
                     'nomorIdentitas' => $header->NOMOR_IJIN_TPB,
                     'seriEntitas' => 3
                 )
@@ -170,19 +175,19 @@ class MMP40Controller extends Controller
             $arr_pungutan [] = array(
                 'kodeFasilitasTarif' => "3",
                 'kodeJenisPungutan' => 'PPN',
-                'nilaiPungutan' => 'waiting list'
+                'nilaiPungutan' => floatval(0)
             );
 
             $arr_header = array(
-                'NoTransasksi' => $header->no_trans,
+                // 'NoTransasksi' => $header->no_trans,
                 'asalData' => 'S',
-                'asuransi' => $header->ASURANSI,
+                'asuransi' => floatval(0),
                 'bruto' => floatval($header->BRUTO),
                 'cif' => $r_CIF,
                 'kodeJenisTpb' => $header->KODE_JENIS_TPB,
                 'freight' => $r_freight,
                 'hargaPenyerahan' => floatval($header->HARGA_PENYERAHAN),
-                'idPengguna' => '-',
+                'idPengguna' => $header->npwp_pengusaha,
                 'jabatanTtd' => $header->JABATAN_TTD,
                 'jumlahKontainer' => $r_kontainer,
                 'kodeDokumen' => $header->kode_bc,
@@ -191,8 +196,8 @@ class MMP40Controller extends Controller
                 'kotaTtd' => $header->KOTA_TTD,
                 'namaTtd' => $header->NAMA_TTD,
                 'netto' => floatval($header->NETTO),
-                'nik' => $header->npwp_pengusaha,
-                'nomorAju' => 'custom acts',
+                'nik' => '05.005643',
+                'nomorAju' => '000040-014680-20231120-000313',
                 'seri' => 0,
                 'tanggalAju' => date('Y-m-d', strtotime($header->TANGGAL_AJU)),
                 'tanggalTtd' => date('Y-m-d', strtotime($header->TANGGAL_AJU)),
