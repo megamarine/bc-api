@@ -51,7 +51,7 @@ class MMP40 extends Model
             ACTS_tpb_header ath
         join ACTS_tpb_kemasan atk on atk.UCode_tpb_header = ath.Ucode_tpb_header
         join tb_m_Kemasan tmk on tmk.UCode_Kemasan = atk.ucode_kemasan
-        WHERE SUBSTRING(ath.No_BC,3,2) = 40 and ath.NOMOR_AJU = '07134000165220231101005198'");
+        WHERE SUBSTRING(ath.No_BC,3,2) = 40 and ath.NOMOR_AJU = '07134000165220231101005201'");
     }
 
     function get_data_dokumen($Ucode) {
